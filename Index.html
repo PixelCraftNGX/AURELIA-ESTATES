@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurelia Estates — Luxury Homes, Penthouses & Private Estates</title>
+<meta name="description" content="Aurelia Estates curates exceptional homes, penthouses, waterfront residences and private estates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--charcoal:#0E0E10;--charcoal-soft:#16161A;--ivory:#F6F3EE;--stone:#C9C2B8;--gold:#B08D57;--gold-soft:rgba(176,141,87,.35);--ink:#1B1B1E;--muted:#6E6A64;--line:rgba(14,14,16,.12);--line-light:rgba(246,243,238,.16);--serif:"Cormorant Garamond",Georgia,serif;--sans:"Inter",-apple-system,sans-serif;--ease:cubic-bezier(.22,.61,.36,1);--shell:min(1280px,92vw)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--ivory);color:var(--ink);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}ul{list-style:none}
+  ::selection{background:var(--gold);color:#fff}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:400;line-height:1.08}
+.display{font-size:clamp(2.4rem,7vw,5.2rem);text-transform:uppercase;letter-spacing:.04em}
+.h2{font-size:clamp(1.9rem,4.4vw,3.2rem);text-transform:uppercase;letter-spacing:.05em}
+.eyebrow{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.1rem}
+.eyebrow::before{content:"";display:inline-block;width:34px;height:1px;background:var(--gold);vertical-align:middle;margin-right:12px}
+.lede{font-size:1.05rem;color:var(--muted);max-width:56ch}
+.shell{width:var(--shell);margin-inline:auto}
+.section{padding:clamp(4rem,9vw,8rem) 0}
+.section--dark{background:var(--charcoal);color:var(--ivory)}
+.section--dark .lede{color:var(--stone)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:clamp(2.5rem,5vw,4rem);flex-wrap:wrap}
+.btn{position:relative;display:inline-flex;align-items:center;gap:.7rem;padding:.95rem 2rem;border:1px solid currentColor;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;overflow:hidden;transition:color .45s var(--ease);background:transparent}
+.btn span{position:relative;z-index:1}
+.btn::before{content:"";position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.btn:hover::before{transform:scaleX(1)}
+.btn:hover{color:#fff;box-shadow:0 0 24px var(--gold-soft)}
+.btn--solid{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn--solid::before{background:var(--ivory)}
+.btn--solid:hover{color:var(--charcoal)}
+.btn--light{color:var(--ivory)}
+.link-arrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:inline-flex;gap:.6rem;align-items:center}
+.link-arrow::after{content:"→";transition:transform .35s var(--ease)}
+.link-arrow:hover::after{transform:translateX(6px)}
+.nav{position:fixed;inset:0 0 auto;z-index:100;transition:.45s var(--ease);padding:1.5rem 0;color:var(--ivory)}
+.nav.scrolled{background:rgba(14,14,16,.75);backdrop-filter:blur(18px);padding:.8rem 0;box-shadow:0 1px 0 var(--line-light)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.logo{font-family:var(--serif);font-size:1.3rem;letter-spacing:.18em;text-transform:uppercase}
+  .logo em{color:var(--gold);font-style:normal}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85;position:relative;padding:.3rem 0}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav-links a:hover,.nav-links a.active{opacity:1}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{border:1px solid var(--line-light);padding:.65rem 1.4rem;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase}
+.nav-cta:hover{background:var(--gold);border-color:var(--gold)}
+.burger{display:none;flex-direction:column;gap:5px;padding:.5rem}
+.burger span{width:24px;height:1.5px;background:currentColor}
+.mobile-menu{position:fixed;inset:0;background:var(--charcoal);z-index:99;display:none;flex-direction:column;justify-content:center;padding:6rem 8vw;gap:1.4rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:2rem;color:var(--ivory)}
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:var(--ivory);overflow:hidden}
+.hero-media{position:absolute;inset:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;animation:kb 22s var(--ease) infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.12)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,16,.45),rgba(14,14,16,.25) 45%,rgba(14,14,16,.85))}
+.hero-content{position:relative;z-index:2;padding-bottom:clamp(4rem,9vw,7rem);width:var(--shell);margin-inline:auto}
+.hero .gold-line{width:72px;height:1px;background:var(--gold);margin:1.8rem 0}
+.hero-actions{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:2.2rem}
+.hero-meta{display:flex;gap:2.5rem;margin-top:3.5rem;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--stone)}
+.search{position:relative;z-index:5;margin-top:-3rem;background:#fff;box-shadow:0 30px 70px rgba(14,14,16,.12);padding:1.4rem}
+.search-grid{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:1rem;align-items:end}
+.field label{display:block;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
+.field select{width:100%;padding:.85rem 0;border:none;border-bottom:1px solid var(--line);background:transparent;font:inherit;outline:none}
+.props{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,3vw,2.5rem)}
+.prop{position:relative;background:#fff;transition:.5s var(--ease)}
+.prop:hover{transform:translateY(-8px);box-shadow:0 34px 70px rgba(14,14,16,.16)}
+.prop-media{position:relative;overflow:hidden;aspect-ratio:4/3}
+.prop-media img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.prop:hover .prop-media img{transform:scale(1.07)}
+.prop-tag{position:absolute;top:1rem;left:1rem;background:rgba(14,14,16,.72);color:var(--ivory);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;padding:.45rem .8rem}
+.fav{position:absolute;top:1rem;right:1rem;width:38px;height:38px;display:grid;place-items:center;background:rgba(246,243,238,.9);border-radius:50%;z-index:2}
+.fav.active{color:var(--gold)}
+.prop-body{padding:1.5rem 1.4rem 1.7rem}
+.prop-loc{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.prop-title{font-size:1.5rem;margin:.4rem 0 .8rem}
+.prop-specs{display:flex;gap:1.1rem;font-size:.78rem;color:var(--muted);padding-bottom:1rem;border-bottom:1px solid var(--line);margin-bottom:1rem}
+.prop-price{font-family:var(--serif);font-size:1.3rem}
+.prop-price small{font-family:var(--sans);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block}
+.rail{display:flex;gap:1.6rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:1.2rem;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.dev-card{flex:0 0 min(420px,82vw);scroll-snap-align:start;position:relative;overflow:hidden}
+.dev-card img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.dev-info{position:absolute;inset:auto 0 0;padding:1.6rem;background:linear-gradient(transparent,rgba(14,14,16,.88));color:var(--ivory)}
+  .dev-info h3{font-size:1.6rem}
+.dev-info p{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin:.4rem 0 .9rem}
+.diff{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-light)}
+.diff-item{padding:2.4rem 2rem;border-bottom:1px solid var(--line-light);border-right:1px solid var(--line-light)}
+.diff-item:nth-child(3n){border-right:none}
+.diff-item h3{font-size:1.35rem;margin-bottom:.6rem}
+.diff-item p{color:var(--stone);font-size:.92rem}
+.diff-num{font-family:var(--serif);color:var(--gold);letter-spacing:.2em}
+.hoods{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.hood{position:relative;overflow:hidden;aspect-ratio:3/4}
+.hood img{width:100%;height:100%;object-fit:cover;filter:saturate(.8);transition:1s var(--ease)}
+.hood:hover img{transform:scale(1.08)}
+.hood span{position:absolute;left:1.2rem;bottom:1.1rem;color:var(--ivory);font-family:var(--serif);font-size:1.35rem;z-index:2}
+.hood::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(14,14,16,.65))}
+.quote{max-width:820px;margin-inline:auto;text-align:center}
+.quote blockquote{font-family:var(--serif);font-size:clamp(1.5rem,3.2vw,2.3rem);line-height:1.35;font-style:italic}
+.quote cite{display:block;margin-top:1.8rem;font-style:normal;font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.quote-slide{display:none}
+.quote-slide.active{display:block;animation:fadeIn .8s var(--ease)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.quote-dots{display:flex;gap:.6rem;justify-content:center;margin-top:2.2rem}
+.quote-dots button{width:26px;height:1px;background:var(--line-light)}
+.quote-dots button.active{background:var(--gold);width:44px}
+.journal{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem}
+.post img{aspect-ratio:16/10;object-fit:cover;width:100%;filter:saturate(.85)}
+.post h3{font-size:1.4rem;margin:.9rem 0 .5rem}
+.post p{color:var(--muted);font-size:.92rem}
+.post time{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.cta-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,6vw,5rem);align-items:center}
+.form{display:grid;gap:1.2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form input,.form select,.form textarea{width:100%;padding:.95rem 0;background:transparent;border:none;border-bottom:1px solid var(--line-light);color:inherit;font:inherit;outline:none}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--gold)}
+.form ::placeholder{color:rgba(201,194,184,.6)}
+.contact-options{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.6rem}
+.success{color:var(--gold);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;opacity:0;transition:.6s}
+.success.show{opacity:1}
+.footer{background:var(--charcoal);color:var(--stone);padding:clamp(4rem,8vw,6rem) 0 2.5rem}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:2.5rem}
+.footer h4{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ivory);margin-bottom:1.2rem}
+.footer a:hover{color:var(--gold)}
+.footer li{margin-bottom:.55rem;font-size:.9rem}
+.news{display:flex;border-bottom:1px solid var(--line-light);margin-top:1rem}
+.news input{flex:1;padding:.8rem 0;background:none;border:none;color:var(--ivory);outline:none}
+.news button{color:var(--gold);letter-spacing:.2em;font-size:.68rem;text-transform:uppercase}
+.socials{display:flex;gap:1rem;margin-top:1.4rem}
+.socials a{width:38px;height:38px;border:1px solid var(--line-light);display:grid;place-items:center;font-size:.7rem}
+.socials a:hover{border-color:var(--gold);color:var(--gold)}
+.footer-bottom{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:3.5rem;padding-top:1.6rem;border-top:1px solid var(--line-light);font-size:.75rem}
+.gold-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:3rem 0 0}
+.listing-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+.gallery-main{position:relative;overflow:hidden;aspect-ratio:16/10;cursor:zoom-in}
+.gallery-main img{width:100%;height:100%;object-fit:cover;transition:.6s var(--ease)}
+.gallery-main.zoom img{transform:scale(1.6)}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;margin-top:.6rem}
+.thumbs img{aspect-ratio:4/3;object-fit:cover;opacity:.55;cursor:pointer}
+.thumbs img.active,.thumbs img:hover{opacity:1;outline:1px solid var(--gold)}
+.agent-panel{position:sticky;top:6.5rem;background:#fff;border:1px solid var(--line);padding:2rem}
+.agent-panel .price{font-family:var(--serif);font-size:2.2rem}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.6rem 0;font-size:.9rem}
+.facts div{border-bottom:1px solid var(--line);padding-bottom:.7rem}
+  .facts dt{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.amenities{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.amenities li{border:1px solid var(--line);padding:.45rem .9rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tour-embed{aspect-ratio:16/9;background:var(--charcoal);display:grid;place-items:center;color:var(--stone);margin-top:1.4rem}
+.map-embed{aspect-ratio:16/8;background:var(--charcoal-soft);display:grid;place-items:center;color:var(--stone);border:1px solid var(--line-light);margin-top:1.4rem}
+.modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;background:rgba(14,14,16,.7);backdrop-filter:blur(8px);padding:1.5rem}
+.modal.open{display:grid}
+.modal-box{background:var(--ivory);color:var(--ink);max-width:520px;width:100%;padding:2.5rem;position:relative;animation:fadeIn .5s var(--ease)}
+.modal-close{position:absolute;top:1rem;right:1.2rem;font-size:1.4rem;color:var(--muted)}
+.wa-float{position:fixed;right:1.4rem;bottom:1.4rem;z-index:90;width:54px;height:54px;border-radius:50%;background:var(--charcoal);color:var(--ivory);display:grid;place-items:center;border:1px solid var(--gold)}
+.wa-float:hover{background:var(--gold)}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .5s var(--ease)}
+.page-hero{padding:9rem 0 4rem;background:var(--charcoal);color:var(--ivory)}
+.page-hero .lede{color:var(--stone)}
+.reveal{opacity:0;transform:translateY(34px);transition:.9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:1024px){.props,.journal,.diff,.hoods{grid-template-columns:repeat(2,1fr)}.search-grid{grid-template-columns:1fr 1fr}.listing-layout,.cta-split{grid-template-columns:1fr}.agent-panel{position:static}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.nav-links,.nav-cta{display:none}.burger{display:flex}.props,.journal,.diff,.hoods,.search-grid,.form-row,.footer-grid{grid-template-columns:1fr}.diff-item{border-right:none}}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="shell nav-inner">
+<a class="logo" href="#" data-page="home">Aurelia<em> Estates</em></a>
+<nav class="nav-links">
+<a href="#" data-page="home">Home</a>
+<a href="#" data-page="property">Residences</a>
+<a href="#" data-page="developments">Developments</a>
+<a href="#" data-page="about">About</a>
+<a href="#" data-page="contact">Contact</a>
+</nav>
+<a class="nav-cta" href="#" data-open-modal>Private Viewing</a>
+<button class="burger" aria-label="Menu" id="burger"><span></span><span></span><span></span></button>
+</div></header>
+<div class="mobile-menu" id="mmenu">
+<a href="#" data-page="home">Home</a><a href="#" data-page="property">Residences</a>
+<a href="#" data-page="developments">Developments</a><a href="#" data-page="about">About</a>
+<a href="#" data-page="contact">Contact</a>
+</div>
+<!-- ============ HOME ============ -->
+<main>
+<div class="page active" id="page-home">
+<section class="hero">
+<div class="hero-media"><img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2000&q=75" alt="Luxury residence"></div>
+<div class="hero-content">
+<h1 class="display">Exceptional Homes.<br>Extraordinary Living.</h1>
+<div class="gold-line" style="width:72px;height:1px;background:var(--gold);margin:1.8rem 0"></div>
+<p class="lede" style="color:var(--stone)">Aurelia Estates curates architectural residences, penthouses and private estates for discerning buyers and investors.</p>
+<div class="hero-actions"><a class="btn btn--light" href="#" data-page="property"><span>Explore Residences</span></a><a class="btn" href="#" data-page="developments"><span>Signature Developments</span></a></div>
+<div class="hero-meta"><span>Abuja</span><span>Lagos</span><span>Diaspora Advisory</span></div>
+</div></section>
+
+<section class="shell"><form class="search">
+<div class="search-grid">
+<div class="field"><label>Location</label><select><option>Any location</option><option>Maitama</option><option>Asokoro</option><option>Ikoyi</option><option>Banana Island</option></select></div>
+<div class="field"><label>Property Type</label><select><option>Any type</option><option>Villa</option><option>Penthouse</option><option>Estate</option></select></div>
+<div class="field"><label>Price Range</label><select><option>Any price</option><option>₦100m+</option><option>₦500m+</option></select></div>
+<div class="field"><label>Bedrooms</label><select><option>Any</option><option>3+</option><option>5+</option></select></div>
+<button class="btn btn--solid" type="button" data-page="property"><span>Search</span></button>
+</div></form></section>
+
+<section class="section"><div class="shell">
+<div class="section-head"><div><p class="eyebrow">Featured Residences</p><h2 class="h2">Curated for the few</h2></div></div>
+<div class="props">
+<article class="prop reveal"><a href="#" data-page="property"><div class="prop-media"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=70" alt="Villa" loading="lazy"><span class="prop-tag">For Sale</span><button class="fav">♡</button></div><div class="prop-body"><p class="prop-loc">Maitama</p><h3 class="prop-title serif">The Meridian Villa</h3><div class="prop-specs"><span>6 Beds</span><span>7 Baths</span><span>9,400 Sq Ft</span></div><p class="prop-price">₦850,000,000<small>Guide price</small></p></div></a></article>
+<article class="prop reveal"><a href="#" data-page="property"><div class="prop-media"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=70" alt="Penthouse" loading="lazy"><span class="prop-tag">Exclusive</span><button class="fav">♡</button></div><div class="prop-body"><p class="prop-loc">Victoria Island</p><h3 class="prop-title serif">Skyline Penthouse</h3><div class="prop-specs"><span>5 Beds</span><span>6 Baths</span><span>7,800 Sq Ft</span></div><p class="prop-price">₦1,250,000,000<small>Guide price</small></p></div></a></article>
+<article class="prop reveal"><a href="#" data-page="property"><div class="prop-media"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=70" alt="Villa" loading="lazy"><span class="prop-tag">Off-Market</span><button class="fav">♡</button></div><div class="prop-body"><p class="prop-loc">Banana Island</p><h3 class="prop-title serif">Casa Serena</h3><div class="prop-specs"><span>7 Beds</span><span>8 Baths</span><span>12,600 Sq Ft</span></div><p class="prop-price">₦1,900,000,000<small>Guide price</small></p></div></a></article>
+</div></div></section>
+
+<section class="section section--dark"><div class="shell">
+<div class="section-head"><div><p class="eyebrow">Signature Developments</p><h2 class="h2">Architectural landmarks</h2></div><a class="link-arrow" href="#" data-page="developments">All developments</a></div>
+<div class="rail">
+<article class="dev-card"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=70" alt="Development" loading="lazy"><div class="dev-info"><h3 class="serif">Aurelia One</h3><p>Maitama · 2027</p><a class="link-arrow" href="#" data-page="developments">View Development</a></div></article>
+<article class="dev-card"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=70&sig=2" alt="Development" loading="lazy"><div class="dev-info"><h3 class="serif">The Lagoon Residences</h3><p>Ikoyi · 2028</p><a class="link-arrow" href="#" data-page="developments">View Development</a></div></article>
+<article class="dev-card"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=70&sig=3" alt="Development" loading="lazy"><div class="dev-info"><h3 class="serif">Stone & Sky</h3><p>Guzape · 2026</p><a class="link-arrow" href="#" data-page="developments">View Development</a></div></article>
+</div></div></section>
+
+<section class="section"><div class="shell">
+<div class="section-head"><div><p class="eyebrow">The Aurelia Difference</p><h2 class="h2">A private standard of service</h2></div></div>
+<div class="diff">
+<div class="diff-item reveal"><span class="diff-num">01</span><h3 class="serif">Private Advisory</h3><p>Discreet, one-to-one guidance shaped around your objectives.</p></div>
+<div class="diff-item reveal"><span class="diff-num">02</span><h3 class="serif">Off-Market Access</h3><p>A curated portfolio of residences never publicly listed.</p></div>
+<div class="diff-item reveal"><span class="diff-num">03</span><h3 class="serif">Legal & Title Support</h3><p>Coordinated due diligence and documentation.</p></div>
+<div class="diff-item reveal"><span class="diff-num">04</span><h3 class="serif">Interior Staging</h3><p>Bespoke presentation of each residence.</p></div>
+<div class="diff-item reveal"><span class="diff-num">05</span><h3 class="serif">Investment Analysis</h3><p>Yield and appreciation considered with clarity.</p></div>
+<div class="diff-item reveal"><span class="diff-num">06</span><h3 class="serif">Relocation Services</h3><p>A seamless arrival for diaspora clients.</p></div>
+</div></div></section>
+<section class="section" style="background:#EFEAE2"><div class="shell">
+<div class="section-head"><div><p class="eyebrow">Curated Neighbourhoods</p><h2 class="h2">Addresses of distinction</h2></div></div>
+<div class="hoods">
+<a class="hood" href="#"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=70" alt="Maitama" loading="lazy"><span>Maitama</span></a>
+<a class="hood" href="#"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=70&sig=2" alt="Asokoro" loading="lazy"><span>Asokoro</span></a>
+<a class="hood" href="#"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=70&sig=3" alt="Ikoyi" loading="lazy"><span>Ikoyi</span></a>
+<a class="hood" href="#"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=70&sig=4" alt="Banana Island" loading="lazy"><span>Banana Island</span></a>
+</div></div></section>
+
+<section class="section section--dark"><div class="shell quote">
+<p class="eyebrow" style="text-align:center">Client Voices</p>
+<div class="quote-slide active"><blockquote>“Aurelia understood precisely what we were looking for — and then showed us a home we did not know existed.”</blockquote><cite>— A. Adeyemi, London</cite></div>
+<div class="quote-slide"><blockquote>“Discreet, meticulous and genuinely informed. The entire acquisition felt considered.”</blockquote><cite>— The Okafor Family, Abuja</cite></div>
+<div class="quote-dots"><button class="active"></button><button></button></div>
+</div></section>
+
+<section class="section"><div class="shell">
+<div class="section-head"><div><p class="eyebrow">Journal</p><h2 class="h2">Notes on living well</h2></div></div>
+<div class="journal">
+<article class="post reveal"><a href="#"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy"><time>Oct 2026 · Market</time><h3 class="serif">Abuja's prime market</h3><p>What discerning buyers are prioritising.</p></a></article>
+<article class="post reveal"><a href="#"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=70&sig=2" alt="" loading="lazy"><time>Oct 2026 · Architecture</time><h3 class="serif">Material honesty</h3><p>Stone, timber and light in enduring residences.</p></a></article>
+<article class="post reveal"><a href="#"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=70&sig=3" alt="" loading="lazy"><time>Oct 2026 · Investment</time><h3 class="serif">Waterfront assets</h3><p>Scarcity, infrastructure and the long view.</p></a></article>
+</div></div></section>
+
+<section class="section section--dark"><div class="shell cta-split">
+<div><p class="eyebrow">Private Advisory</p><h2 class="h2">Arrange a private viewing</h2>
+<p class="lede" style="margin-top:1.2rem">Share a few details and our advisory team will curate a selection for you.</p>
+<div class="contact-options"><a class="btn btn--light" href="tel:+2349124497463"><span>Call Advisory</span></a><a class="btn" href="https://wa.me/2349124497463"><span>WhatsApp</span></a></div></div>
+<form class="form js-form">
+<div class="form-row"><input placeholder="Full name" required><input placeholder="Phone" required></div>
+<div class="form-row"><input type="email" placeholder="Email" required><select><option>Abuja</option><option>Lagos</option><option>Diaspora</option></select></div>
+<textarea rows="3" placeholder="Tell us what you are looking for"></textarea>
+<button class="btn btn--solid" type="submit"><span>Request Consultation</span></button>
+<p class="success">Thank you — our team will be in touch.</p>
+</form></div></section>
+</div>
+<!-- ============ PROPERTY ============ -->
+<div class="page" id="page-property">
+<section class="page-hero"><div class="shell">
+<p class="eyebrow">Maitama, Abuja</p><h1 class="h2">The Meridian Villa</h1>
+<div class="prop-specs" style="border:none;margin-top:1rem"><span>6 Beds</span><span>7 Baths</span><span>9,400 Sq Ft</span><span>For Sale</span></div>
+</div></section>
+<section class="shell section" style="padding-top:1rem"><div class="listing-layout">
+<div>
+<div class="gallery-main"><img id="gmain" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=75" alt="Villa interior"></div>
+<div class="thumbs">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60" class="active" alt="thumb">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60&sig=2" alt="thumb">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60&sig=3" alt="thumb">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60&sig=4" alt="thumb">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60&sig=5" alt="thumb">
+</div>
+<div style="padding:3rem 0 0"><p class="eyebrow">Virtual Tour</p><div class="tour-embed"><p>3D / Virtual tour embed area</p></div></div>
+<div style="padding:3rem 0 0"><p class="eyebrow">Neighbourhood</p><div class="map-embed"><p>Interactive map embed</p></div></div>
+</div>
+<aside class="agent-panel">
+<p class="prop-loc">Guide Price</p><p class="price">₦850,000,000</p>
+<div class="facts">
+<div><dt>Bedrooms</dt><dd>6</dd></div><div><dt>Bathrooms</dt><dd>7</dd></div>
+<div><dt>Area</dt><dd>9,400 sq ft</dd></div><div><dt>Tenure</dt><dd>Freehold</dd></div>
+</div>
+<button class="btn btn--solid" data-open-modal style="width:100%;justify-content:center"><span>Schedule Viewing</span></button>
+<div style="margin:1.6rem 0;height:1px;background:var(--line)"></div>
+<p class="prop-loc">Investment Calculator</p>
+<form class="form" id="calc" style="margin-top:1rem">
+<input id="c-price" type="number" placeholder="Property price (₦)" required>
+<div class="form-row"><input id="c-dep" type="number" value="25" placeholder="Deposit %"><input id="c-rate" type="number" step="0.1" value="18" placeholder="Rate %"></div>
+<div class="form-row"><input id="c-years" type="number" value="10" placeholder="Years"><button class="btn" type="submit"><span>Calculate</span></button></div>
+<p id="c-result" class="serif" style="color:var(--gold);font-size:1.1rem"></p>
+</form>
+</aside>
+</div></section>
+<section class="section"><div class="shell">
+<p class="eyebrow">Amenities</p><h2 class="h2" style="font-size:1.8rem">Residence facts</h2>
+<ul class="amenities"><li>Infinity Pool</li><li>Cinema</li><li>Smart Home</li><li>Gym</li><li>Garden</li><li>Backup Power</li><li>24/7 Security</li><li>Elevator</li></ul>
+</div></section>
+</div>
+
+<!-- ============ DEVELOPMENTS ============ -->
+<div class="page" id="page-developments">
+<section class="page-hero"><div class="shell">
+<p class="eyebrow">Signature Developments</p><h1 class="display" style="font-size:clamp(2.4rem,6vw,4.2rem)">Built to endure</h1>
+<p class="lede" style="margin-top:1.4rem">Residences of lasting consequence, conceived with architects and craftspeople.</p>
+</div></section>
+<section class="section"><div class="shell"><div class="props">
+
+<article class="prop reveal">
+<div class="prop-media"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=70" alt="Aurelia One" loading="lazy"><span class="prop-tag">Selling</span></div>
+<div class="prop-body"><p class="prop-loc">Maitama, Abuja</p><h3 class="prop-title serif">Aurelia One</h3><div class="prop-specs"><span>2027</span><span>24 residences</span></div><p class="prop-price">From ₦450,000,000</p></div>
+</article>
+
+<article class="prop reveal">
+<div class="prop-media"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=70" alt="The Lagoon Residences" loading="lazy"><span class="prop-tag">Off-Plan</span></div>
+<div class="prop-body"><p class="prop-loc">Ikoyi, Lagos</p><h3 class="prop-title serif">The Lagoon Residences</h3><div class="prop-specs"><span>2028</span><span>18 residences</span></div><p class="prop-price">From ₦900,000,000</p></div>
+</article>
+
+<article class="prop reveal">
+<div class="prop-media"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=70" alt="Stone and Sky" loading="lazy"><span class="prop-tag">Selling</span></div>
+<div class="prop-body"><p class="prop-loc">Guzape, Abuja</p><h3 class="prop-title serif">Stone & Sky</h3><div class="prop-specs"><span>2026</span><span>12 penthouses</span></div><p class="prop-price">From ₦380,000,000</p></div>
+</article>
+
+</div></div></section>
+</div>
+<!-- ============ ABOUT ============ -->
+< class="page" id="page-about">
+<section class="page-hero"><div class="shell">
+<p class="eyebrow">About Aurelia</p><h1 class="display" style="font-size:clamp(2.4rem,6vw,4.2rem)">A quieter standard</h1>
+<p class="lede" style="margin-top:1.4rem">Exceptional property deserves exceptional counsel.</p>
+</div></section>
+<section class="section"><div class="shell" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center">
+<img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=75" alt="Advisory" loading="lazy">
+<div><p class="eyebrow">Our Philosophy</p><h2 class="h2" style="font-size:2rem">Curated, private, considered</h2>
+<p class="lede" style="margin-top:1.2rem">We represent a limited portfolio of architectural homes, penthouses, waterfront residences and private estates — handled personally and with discretion.</p></div></div></section>
+< class="section section--dark">< class="shell">< class="diff">
+<div class="diff-item"><span class="diff-num">01</span><h3 class="serif">Discretion</h3><p>Privacy governs every engagement.</p></div>
+<div class="diff-item"><span class="diff-num">02</span><h3 class="serif">Curatorial Judgment</h3><p>Few properties, chosen with conviction.</p></div>
+< class="diff-item"><span class="diff-num">03</span><h3 class="serif">End-to-End Counsel</h3><>Advisory to completion under one standard.</
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact">
+<section class="page-hero"><div class="shell">
+<p class="eyebrow">Contact</p><h1 class="display" style="font-size:clamp(2.4rem,6vw,4.2rem)">Let's begin</h1>
+<p class="lede" style="margin-top:1.4rem">Our advisory team is available for a private conversation.</p>
+</div></section>
+<section class="section"><div class="shell cta-split">
+<div><p class="eyebrow">Offices</p>
+<h3 class="serif" style="font-size:1.6rem">Abuja</h3><p class="lede" style="margin:.4rem 0 1.5rem">14 Kingsway Road, Maitama<br>+234 800 000 0000</p>
+<h3 class="serif" style="font-size:1.6rem">Lagos</h3><p class="lede" style="margin:.4rem 0 1.5rem">By appointment, Victoria Island</p>
+<div class="contact-options"><a class="btn btn--solid" href="https://wa.me/2348000000000"><span>WhatsApp</span></a><a class="btn" href="tel:+2348000000000"><span>Call</span></a></div></div>
+<form class="form js-form">
+<div class="form-row"><input placeholder="Full name" required><input placeholder="Phone" required></div>
+<div class="form-row"><input type="email" placeholder="Email" required><select><option>Buying</option><option>Selling</option><option>Investment</option></select></div>
+<textarea rows="4" placeholder="How may we assist?"></textarea>
+<button class="btn btn--solid" type="submit"><span>Send Enquiry</span></button>
+<p class="success">Thank you — we will respond shortly.</p>
+</form></div></section>
+</div>
+</main>
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact">
+<section class="page-hero"><div class="shell">
+<p class="eyebrow">Contact</p><h1 class="display" style="font-size:clamp(2.4rem,6vw,4.2rem)">Let's begin</h1>
+<p class="lede" style="margin-top:1.4rem">Our advisory team is available for a private conversation.</p>
+</div></section>
+<section class="section"><div class="shell cta-split">
+<div><p class="eyebrow">Offices</p>
+<h3 class="serif" style="font-size:1.6rem">Abuja</h3><p class="lede" style="margin:.4rem 0 1.5rem">14 Kingsway Road, Maitama<br>+234 800 000 0000</p>
+<h3 class="serif" style="font-size:1.6rem">Lagos</h3><p class="lede" style="margin:.4rem 0 1.5rem">By appointment, Victoria Island</p>
+<div class="contact-options"><a class="btn btn--solid" href="https://wa.me/2349124497463"><span>WhatsApp</span></a><a class="btn" href="tel:+2349124497463"><span>Call</span></a></div></div>
+<form class="form js-form">
+<div class="form-row"><input placeholder="Full name" required><input placeholder="Phone" required></div>
+<div class="form-row"><input type="email" placeholder="Email" required><select><option>Buying</option><option>Selling</option><option>Investment</option></select></div>
+<textarea rows="4" placeholder="How may we assist?"></textarea>
+<button class="btn btn--solid" type="submit"><span>Send Enquiry</span></button>
+<p class="success">Thank you — we will respond shortly.</p>
+</form></div></section>
+</div>
+</main>
+<footer class="footer">
+<div class="shell">
+<div class="footer-grid">
+<div><a class="logo" href="#" data-page="home" style="color:var(--ivory)">Aurelia<em> Estates</em></a>
+<p style="margin-top:1rem;max-width:34ch">Curated residences, signature developments and private advisory.</p>
+<div class="socials"><a href="#">IG</a><a href="#">IN</a><a href="#">X</a><a href="#">YT</a></div></div>
+<div><h4>Explore</h4><ul>
+<li><a href="#" data-page="property">Residences</a></li><li><a href="#" data-page="developments">Developments</a></li>
+<li><a href="#" data-page="about">About</a></li><li><a href="#" data-page="contact">Contact</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="#" data-page="about">About Aurelia</a></li><li><a href="#" data-page="contact">Contact</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+<div><h4>Private Bulletin</h4>
+<form class="news js-form"><input type="email" placeholder="Email address" required><button type="submit">Join</button></form>
+<p class="success">Welcome to Aurelia.</p>
+<p style="margin-top:1.4rem;font-size:.85rem">14 Kingsway Road, Maitama, Abuja<br>+234 800 000 0000</p>
+</div>
+</div>
+<div class="gold-divider"></div>
+<div class="footer-bottom"><span>© 2026 Aurelia Estates.</span><span>Abuja · Lagos · Diaspora Advisory</span></div>
+</div></footer>
+
+<a class="wa-float" href="https://wa.me/2349124497463" aria-label="WhatsApp">WA</a>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<button class="modal-close" id="mclose">×</button>
+<p class="eyebrow">Private Viewing</p><h3 class="serif" style="font-size:1.8rem;margin-bottom:1.4rem">Arrange a private viewing</h3>
+<form class="form js-form">
+<div class="form-row"><input placeholder="Full name" required><input placeholder="Phone" required></div>
+<div class="form-row"><input type="email" placeholder="Email" required><input placeholder="Preferred property"></div>
+<div class="form-row"><input type="date"><input type="time"></div>
+<button class="btn btn--solid" type="submit"><span>Request Viewing</span></button>
+<p class="success">Your request has been received.</p>
+</form></div></div>
+
+<script>
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
+/* Page switching */
+function go(name){
+  $$('.page').forEach(p=>p.classList.remove('active'));
+  $('#page-'+name)?.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));
+  $('#mmenu').classList.remove('open');
+  scrollTo({top:0,behavior:'smooth'});
+}
+$$('[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.page);}));
+/* Nav scroll */
+const nav=$('.nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+/* Mobile menu */
+$('#burger').addEventListener('click',()=>$('#mmenu').classList.toggle('open'));
+/* Reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+$$('.reveal').forEach(el=>io.observe(el));
+/* Testimonials */
+const slides=$$('.quote-slide'),dots=$$('.quote-dots button');let qi=0;
+const show=i=>{slides.forEach((s,x)=>s.classList.toggle('active',x===i));dots.forEach((d,x)=>d.classList.toggle('active',x===i));qi=i;};
+dots.forEach((d,i)=>d.addEventListener('click',()=>show(i)));
+if(slides.length)setInterval(()=>show((qi+1)%slides.length),6000);
+/* Favourites */
+$$('.fav').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();b.classList.toggle('active');}));
+/* Gallery */
+const gm=$('#gmain'),ths=$$('.thumbs img');
+ths.forEach(t=>t.addEventListener('click',()=>{ths.forEach(x=>x.classList.remove('active'));t.classList.add('active');gm.src=t.src;}));
+$('.gallery-main').addEventListener('click',()=>$('.gallery-main').classList.toggle('zoom'));
+/* Modal */
+const modal=$('#modal');
+$$('[data-open-modal]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();modal.classList.add('open');}));
+$('#mclose').addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open');});
+addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open');});
+/* Calculator */
+$('#calc').addEventListener('submit',e=>{
+  e.preventDefault();
+  const p=+$('#c-price').value,d=+$('#c-dep').value/100,r=+$('#c-rate').value/100/12,y=+$('#c-years').value*12;
+  const loan=p*(1-d),m=r?loan*r/(1-Math.pow(1+r,-y)):loan/y;
+  $('#c-result').textContent='Monthly: ₦'+Math.round(m).toLocaleString();
+});
+/* Forms */
+$$('.js-form').forEach(f=>f.addEventListener('submit',e=>{
+  e.preventDefault();
+  const s=f.querySelector('.success');s&&s.classList.add('show');f.reset();
+  setTimeout(()=>s&&s.classList.remove('show'),4000);
+}));
+</script>
+</body>
+</html>
